@@ -1,0 +1,258 @@
+/* Cornwallis ICT CSS */
+
+@import 'font-awesome.css';
+
+@font-face {
+  font-family: 'Vera';
+  src: url('font/Vera-webfont.eot?') format('embedded-opentype'), url('font/Vera-webfont.woff') format('woff'), url('font/Vera-webfont.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Vera';
+  src: url('font/Vera-Bold-webfont.eot?') format('embedded-opentype'), url('font/Vera-Bold-webfont.woff') format('woff'), url('font/Vera-Bold-webfont.ttf') format('truetype');
+  font-weight:bold;
+}
+
+@font-face {
+  font-family: 'Vera';
+  src: url('font/Vera-Italic-webfont.eot?') format('embedded-opentype'), url('font/Vera-Italic-webfont.woff') format('woff'), url('font/Vera-Italic-webfont.ttf') format('truetype');
+  font-style: italic
+}
+
+*
+{
+    margin:0px;
+    padding:0px;
+    
+}
+
+body
+{
+    font-family:Vera, georgia, sans-serif;
+    
+    background-color:#f7f7f7;
+    
+    min-width:980px;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    font-weight:normal;
+}
+
+h2 {font-size:1.2em;}
+
+ul, ol
+{
+    list-style-position:inside;
+}
+
+a
+{
+    color:#15A5F7;
+}
+
+table
+{
+    border-collapse:collapse;
+    border:1px solid #d7d7d7;
+}
+
+th, td
+{
+    border:1px solid #d7d7d7;
+    padding:4px;
+}
+
+th
+{
+    font-weight:normal;
+    background-color:#15A5F7;
+    color:white;
+}
+
+blockquote
+{
+    border-left:5px solid #d7d7d7;
+    border-right:5px solid #d7d7d7;
+    padding:0px 10px;
+    
+    border-radius:4px;
+}
+
+pre
+{
+    background-color:#d7d7d7;
+    border-radius:4px;
+}
+
+a.button
+{
+    
+    display: inline-block;
+    background-color: #15A5F7;
+    color: white;
+    height: 50px;
+    line-height:50px;
+    width: 120px;
+    border-radius: 4px;
+    text-align: center;
+    vertical-align: middle;
+    margin:2px;
+
+    text-decoration:none;
+}
+
+a.button:hover
+{
+    background-color:#5FBFFA;
+    color:white;
+}
+
+/* Header */
+
+header
+{
+    height:50px;
+    border-bottom:1px solid #d7d7d7;
+    background-color:white;
+}
+
+header h1
+{
+    color:#8a8a8a;
+    text-transform:uppercase;
+    padding:12px 0px 0px 12px;
+    
+    font-size:14pt;
+}
+
+header h1 span
+{
+    color:#149fee;
+}
+
+/* Nav */
+
+nav
+{
+    float:left;
+    width:90px;
+    border-top:1px solid #efefef;
+    
+    text-align:center;
+}
+
+nav ul
+{
+    list-style-type:none;
+}
+
+nav a
+{
+    text-decoration:none;
+    color:#767676;
+    display:block;
+    height:72px;
+    font-size:9pt;
+    padding-top:18px;
+    
+    width:90px;
+}
+
+nav li.selected a
+{
+    background-color:#15A5F7;
+    color:white;
+}
+
+nav a:hover
+{
+    background-color:#5FBFFA;
+    color:white;
+}
+ 
+nav a i
+{
+    display:block;
+    font-size:24pt;
+}
+
+nav li.selected
+{
+    position:relative;
+}
+
+nav li span
+{
+    display:none;
+	height:0px;
+	width:0px;
+	
+	float:right;
+	
+}
+
+nav li.selected span
+{
+    display:block;
+    border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+	
+	border-left: 20px solid #15A5F7;
+	
+	position:absolute;
+	top:24px;
+	right:-20px;
+}
+
+
+/* main content */
+section#content
+{
+    background-color:white;
+    float:left;
+    
+    min-height:600px;
+    /*width:500px;*/
+    width:55%;
+    
+    border:1px solid #d7d7d7;
+    border-top:1px solid #f7f7f7;
+    border-bottom-right-radius:8px;
+    border-bottom-left-radius:8px;
+    
+    margin-right:28px;
+    
+    padding:28px;
+}
+
+section>*
+{
+    margin-bottom:10px;
+}
+
+
+/* Sidebar */
+section#sidebar
+{
+    float:left;
+    width:25%;
+}
+
+section#sidebar section
+{
+    border:1px solid #d7d7d7;
+    border-radius:4px;
+    
+    background-color:white;
+    
+    margin-top:28px;
+    
+    width:80%;
+    
+    padding:14px;
+}
+
+
+/* Font Awesome */

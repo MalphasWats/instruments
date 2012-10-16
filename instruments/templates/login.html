@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block html_head %}{% endblock %}
+
+{% block html_title %}Login{% endblock %}
+
+{% block title %}Login{% endblock %}
+
+{% block main_navigation %}{% endblock %}
+    
+{% block content %}
+<h2>Log in</h2>
+	<form method="post" action="{{url_for('login')}}" id="loginForm">
+    <input type="hidden" name="next" value="{{next}}">
+	<p><input type="text" id="username" name="username" value="" size="22" tabindex="1">
+	<label for="username">Username</label></p>
+
+	<p><input type="password" id="password" name="password" value="" size="22" tabindex="2">
+	<label for="password">Password</label></p>
+	<p><input name="submit" type="submit" id="submit" tabindex="4" value="Login"></p>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}

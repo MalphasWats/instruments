@@ -14,7 +14,8 @@
 <body>
 
 <header>
-    <span>{% block current_user %}Not logged in{% endblock %}</span>
+    {% if session.user %}<span><i class="icon-user"></i> {{session.user['forename']}} {{session.user['surname']}} <a href="{{url_for('logout')}}"><i class="icon-signout" title="log out"></i></a></span>{% endif %}
+    
     <h1>Instruments <span>{% block title %}Dashboard{% endblock %}</span></h1>
     
 </header>

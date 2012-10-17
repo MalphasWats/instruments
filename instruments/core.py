@@ -8,10 +8,32 @@ import imp
 #from functools import wraps
 
 SECRET_KEY = 'banana'
-PUBLIC_ENDPOINTS = ['login', 'static', 'test_route']
+#PUBLIC_ENDPOINTS = ['login', 'static', 'test_route']
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+
+
+def public_endpoint(function):
+    function.is_public = True
+    return function
+    
+    
+@app.before_request
+def check_login():
+    # if request.endpoint is in list of things that don't need a login (??!?), carry on
+    # if no session at all, throw back to login
+    # check session hash against the database, make sure it's still valid
+    # if not valid, throw back to login
+    login_valid = 'user' in session
+    
+    
+    if (request.endpoint and 
+        'static' not in request.endpoint and 
+        not login_valid and 
+        not getattr(app.view_functions[request.endpoint], 'is_public', False) ) :
+        return render_template('login.html', next=request.endpoint)
+    
 
 @app.route('/')
 def home():
@@ -19,6 +41,7 @@ def home():
     
     
 @app.route('/login/', methods=['POST', 'GET'])
+@public_endpoint
 def login():
     if request.method == 'POST':
         username = request.form.get('username')
@@ -37,33 +60,25 @@ def login():
     return render_template('login.html')
     
 @app.route('/logout/')
+@public_endpoint
 def logout():
     session.pop('user', None)
+    print session
     return redirect(url_for('home'))
     
     
 @app.route('/admin/')
 def admin():
     return render_template('admin.html')
-    
-    
-@app.before_request
-def check_login():
-    # if request.endpoint is in list of things that don't need a login (??!?), carry on
-    # if no session at all, throw back to login
-    # check session hash against the database, make sure it's still valid
-    # if not valid, throw back to login
-    
 
-    if ('user' not in session and
-        not is_public_endpoint(request.endpoint)):
-        return render_template('login.html', next=request.endpoint)
-    
 
 @app.route('/test/')
+@public_endpoint
 def test_route():
-    app.config['PUBLIC_ENDPOINTS'].append('admin')
-    return redirect(url_for('home'))
+    #app.config['PUBLIC_ENDPOINTS'].append('admin')
+    print "test reached"
+    return render_template('admin.html')
+    #return redirect(url_for('home'))
     
     
 def is_public_endpoint(endpoint):
@@ -89,32 +104,25 @@ def load_blueprints():
             f, filename, descr = imp.find_module(fname, [path])
             blueprints[fname] = imp.load_module(fname, f, filename, descr)
             
-            blueprint_name = getattr(blueprints[fname], '__name__')
-            if hasattr(blueprints[fname], 'LABEL'):
-                blueprint_label = getattr(blueprints[fname], 'LABEL')
-            else:
-                blueprint_label = blueprint_name
-                
-            if hasattr(blueprints[fname], 'ICON'):
-                blueprint_icon = getattr(blueprints[fname], 'ICON')
-            else:
-                blueprint_icon = 'link'
-                
-            if hasattr(blueprints[fname], 'PUBLIC_ENDPOINTS'):
-                app.config['PUBLIC_ENDPOINTS'] = app.config['PUBLIC_ENDPOINTS'] + getattr(blueprints[fname], 'PUBLIC_ENDPOINTS')
-            
-            app.register_blueprint(getattr(blueprints[fname], 'module'), url_prefix='/%s' % blueprint_name)
-            app.jinja_env.globals['blueprints'].append( ("%s.index"%blueprint_name, blueprint_label, blueprint_icon) )
-            
-        # elif os.path.isfile(os.path.join(path, fname)):
-            # name, ext = os.path.splitext(fname)
-            # if ext == '.py' and not name == '__init__':
-                # f, filename, descr = imp.find_module(name, [path])
-                # mods[fname] = imp.load_module(name, f, filename, descr)
-                # app.register_blueprint(getattr(mods[fname], 'module'))
+        elif os.path.isfile(os.path.join(path, fname)):
+            name, ext = os.path.splitext(fname)
+            if ext == '.py' and not name == '__init__':
+                f, filename, descr = imp.find_module(name, [path])
+                blueprints[fname] = imp.load_module(name, f, filename, descr)
 
-    # app.jinja_env.globals['blueprints'] = [
-        # ('test_route', 'Item 1', 'home'),
-        # ('test_route', 'Item 2', 'home'),
-        # ('test_route', 'Item 3', 'home')
-    # ]
+    for blueprint in blueprints.values():
+        
+        blueprint_name = getattr(blueprint, '__name__')
+        #print getattr(getattr(blueprints[fname], blueprint_name), '__doc__')
+        if hasattr(blueprint, 'LABEL'):
+            blueprint_label = getattr(blueprints, 'LABEL')
+        else:
+            blueprint_label = blueprint_name
+            
+        blueprint_icon = getattr(blueprint, 'ICON', 'link')
+            
+        # if hasattr(blueprints[fname], 'PUBLIC_ENDPOINTS'):
+            # app.config['PUBLIC_ENDPOINTS'] = app.config['PUBLIC_ENDPOINTS'] + getattr(blueprints[fname], 'PUBLIC_ENDPOINTS')
+                
+        app.register_blueprint(getattr(blueprint, 'module'), url_prefix='/%s' % blueprint_name)
+        app.jinja_env.globals['blueprints'].append( ("%s.index"%blueprint_name, blueprint_label, blueprint_icon) )    

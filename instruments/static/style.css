@@ -139,6 +139,11 @@ header>span
     color:#555;
 }
 
+header>span a
+{
+    display:inline-block;
+}
+
 /* Nav */
 nav
 {

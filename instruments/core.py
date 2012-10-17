@@ -5,6 +5,8 @@ import hashlib
 import os
 import imp
 
+import database
+
 #from functools import wraps
 
 SECRET_KEY = 'banana'
@@ -20,7 +22,7 @@ def public_endpoint(function):
     
     
 @app.before_request
-def check_login():
+def check_valid_login():
     # if request.endpoint is in list of things that don't need a login (??!?), carry on
     # if no session at all, throw back to login
     # check session hash against the database, make sure it's still valid
@@ -47,17 +49,20 @@ def login():
         username = request.form.get('username')
         password_plaintext = request.form.get('password')
         if username != '' and password_plaintext != '':
-            password_hash = hashlib.sha512(password_plaintext).hexdigest()
-            # check details are correct
-            # generate a session hash
-            # store the session hash in the database & session cookie
-            session['user'] = {'forename': 'Michael', 'surname': 'Watts'}
-            next = request.form.get('next')
-            if next == '' or next == 'login':
-                next = 'home'
-            return redirect(url_for(next))
+            user = database.check_login_details(username, password_plaintext)
+            if user:
+                # generate a session hash
+                # store the session hash in the database & session cookie
+                session['user'] = dict(user)
+                next = request.form.get('next')
+                if next == '' or next == 'login':
+                    next = 'home'
+                return redirect(url_for(next))
+            else:
+                flash("incorrect username/password.", category='error')
     
     return render_template('login.html')
+    
     
 @app.route('/logout/')
 @public_endpoint

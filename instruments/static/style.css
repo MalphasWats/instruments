@@ -228,7 +228,7 @@ section#content
     background-color:white;
     float:left;
     
-    min-height:600px;
+    min-height:540px;
     width:55%;
     
     border:1px solid #d7d7d7;
@@ -297,7 +297,6 @@ label
 
 dl label
 {
-    min-width:auto;
     text-align:left;
 }
 

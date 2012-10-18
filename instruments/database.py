@@ -45,7 +45,7 @@ def create_tables():
     
     
 def check_login_details(username, password_plaintext):
-    return {'forename': 'Mike', 'surname': 'Watts', 'user_id': 0}
+    #return {'forename': 'Mike', 'surname': 'Watts', 'user_id': 0}
     password_hash = hashlib.sha512(password_plaintext).hexdigest()
     query = """
         SELECT user_id, forename, surname
@@ -65,3 +65,44 @@ def check_login_details(username, password_plaintext):
     conn.close()
     
     return result
+    
+    
+def get_username_for_id(user_id):
+    query = """
+        SELECT username
+        FROM users
+        WHERE user_id = %s
+    """
+    
+    conn, curs = connect()
+    
+    curs.execute(query, (user_id,))
+    
+    result = curs.fetchone()
+    
+    conn.rollback()
+    curs.close()
+    conn.close()
+    
+    if result:
+        return result['username']
+    else:
+        return None
+        
+        
+def update_password(user_id, password_plaintext):
+    password_hash = hashlib.sha512(password_plaintext).hexdigest()
+    
+    query = """
+        UPDATE users
+        SET password = %s
+        WHERE user_id = %s
+    """
+    
+    conn, curs = connect()
+    
+    curs.execute(query, (password_hash, user_id))
+    
+    conn.commit()
+    curs.close()
+    conn.close()

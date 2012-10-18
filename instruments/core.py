@@ -79,16 +79,33 @@ def admin():
         blueprint_name = getattr(blueprint, '__name__')
         blueprint = getattr(blueprint, blueprint_name, blueprint)
         
-        blueprint_description = getattr(blueprint, '__doc__', None) or ''
-        blueprint_label = getattr(blueprint, 'LABEL', blueprint_name)
-        
         if hasattr(blueprint, 'get_admin_panel'):
-            panel_content = blueprint.get_admin_panel()
-        else:
-            panel_content = ''
+            blueprints.append( {
+                'name': blueprint_name, 
+                'label': getattr(blueprint, 'ADMIN_LABEL', None) or getattr(blueprint, 'LABEL', blueprint_name), 
+                'description': getattr(blueprint, '__doc__', None) or '', 
+                'content': blueprint.get_admin_panel()
+            } )
         
-        blueprints.append( {'name': blueprint_name, 'label': blueprint_label, 'description': blueprint_description, 'content': panel_content} )
-    return render_template('admin.html', registered_blueprints=blueprints)
+        
+    return render_template('admin.html',
+                            current_username = database.get_username_for_id(session['user']['user_id']),
+                            registered_blueprints=blueprints)
+                            
+                            
+@app.route('/save_password', methods=['POST'])
+def update_password():
+    password_plaintext_1 = request.form.get('newPassword_1')
+    password_plaintext_2 = request.form.get('newPassword_2')
+    if password_plaintext_1 == '' and password_plaintext_2 == '':
+        flash("You must fill in both password fields.", 'error')
+    elif password_plaintext_1 != password_plaintext_2:
+        flash("Passwords did not match! Password wasn't changed.", 'error')
+    else:
+        database.update_password(session['user']['user_id'], password_plaintext_1)
+        flash("Your password was updated successfully.", 'info')
+    
+    return redirect("%s#users" % (request.referrer, ))
 
 
 @app.route('/test/')
@@ -134,13 +151,14 @@ def load_blueprints():
         blueprint_name = getattr(blueprint, '__name__')
         blueprint = getattr(blueprint, blueprint_name, blueprint)
         
-        blueprint_label = getattr(blueprint, 'LABEL', blueprint_name)
+        blueprint_label = getattr(blueprint, 'LABEL', None)
         blueprint_icon = getattr(blueprint, 'ICON', 'link')
             
         # if hasattr(blueprints[fname], 'PUBLIC_ENDPOINTS'):
             # app.config['PUBLIC_ENDPOINTS'] = app.config['PUBLIC_ENDPOINTS'] + getattr(blueprints[fname], 'PUBLIC_ENDPOINTS')
                 
         app.register_blueprint(getattr(blueprint, 'module'), url_prefix='/%s' % blueprint_name)
-        app.jinja_env.globals['blueprints'].append( ("%s.index"%blueprint_name, blueprint_label, blueprint_icon) )
+        if blueprint_label:
+            app.jinja_env.globals['blueprints'].append( ("%s.index"%blueprint_name, blueprint_label, blueprint_icon) )
         
     app.config['registered_blueprints'] = blueprints

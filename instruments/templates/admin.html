@@ -6,11 +6,18 @@
 {% block title %}Administration{% endblock %}
     
 {% block content %}
-<h1>Administration</h1>
 <dl class="accordion">
-    <dt><a href="#users">Users</a></dt>
-    <dd id="users">
-        <p>... users ...</p>
+    <dt><a href="#user">User: {{current_username}}</a></dt>
+    <dd id="user">
+        <h2>Change Password</h2>
+        <form action="{{url_for('update_password')}}" method="post" id="changePasswordForm">
+		<ul>
+			<li><label for="newPassword_1">Password</label><input id="newPassword_1" name="newPassword_1" type="password" size="16"></li>
+			<li><label for="newPassword_2">Repeat</label><input id="newPassword_2" name="newPassword_2" type="password" size="16"></li>
+			
+			<li><label class="button"><input id="submit" type="submit" value="Change Password"></label></li>
+		</ul>
+		</form>
     </dd>
     
     {% for blueprint in registered_blueprints %}

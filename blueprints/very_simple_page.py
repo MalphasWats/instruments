@@ -2,6 +2,8 @@
 
 from flask import Blueprint
 
+LABEL = "Very Simple Page"
+
 module = Blueprint('very_simple_page', __name__,
                         template_folder='templates')
 

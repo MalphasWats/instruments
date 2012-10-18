@@ -1,3 +1,5 @@
+"""A very simple page"""
+
 from flask import Blueprint
 
 module = Blueprint('very_simple_page', __name__,

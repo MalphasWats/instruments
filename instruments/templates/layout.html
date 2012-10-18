@@ -27,7 +27,7 @@
         {% for endpoint, label, icon in blueprints %}
             <li {% if endpoint == request.endpoint %}class="selected"{% endif %}><a href="{{url_for(endpoint)}}"><span></span><i class="icon-{{icon}}"></i>{{label}}</a></li>
         {% endfor %}
-        <li {% if request.endpoint == 'admin' %}class="selected"{% endif %}><a href="{{url_for('admin')}}"><span></span><i class="icon-cogs"></i>Admin</a></li>
+        <li {% if request.endpoint == 'admin' %}class="selected"{% endif %}><a href="{{url_for('admin')}}#users"><span></span><i class="icon-cogs"></i>Admin</a></li>
         {% endblock %}
     </ul>
 </nav>

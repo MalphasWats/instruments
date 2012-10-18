@@ -7,7 +7,22 @@
     
 {% block content %}
 <h1>Administration</h1>
-<p>... admin ...</p>
+<dl class="accordion">
+    <dt><a href="#users">Users</a></dt>
+    <dd id="users">
+        <p>... users ...</p>
+    </dd>
+    
+    {% for blueprint in registered_blueprints %}
+    <dt><a href="#{{blueprint.name}}">{{blueprint.label}}</a></dt>
+    <dd id="{{blueprint.name}}">
+        <p>{{blueprint.description}}</p>
+        
+        {{blueprint.content | safe}}
+    </dd>
+    {% endfor %}
+    
+</dl>
 {% endblock %}
 
 {% block sidebar %}{% endblock %}

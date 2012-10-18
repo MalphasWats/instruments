@@ -74,7 +74,21 @@ def logout():
     
 @app.route('/admin/')
 def admin():
-    return render_template('admin.html')
+    blueprints = []
+    for blueprint in app.config['registered_blueprints'].values():
+        blueprint_name = getattr(blueprint, '__name__')
+        blueprint = getattr(blueprint, blueprint_name, blueprint)
+        
+        blueprint_description = getattr(blueprint, '__doc__', None) or ''
+        blueprint_label = getattr(blueprint, 'LABEL', blueprint_name)
+        
+        if hasattr(blueprint, 'get_admin_panel'):
+            panel_content = blueprint.get_admin_panel()
+        else:
+            panel_content = ''
+        
+        blueprints.append( {'name': blueprint_name, 'label': blueprint_label, 'description': blueprint_description, 'content': panel_content} )
+    return render_template('admin.html', registered_blueprints=blueprints)
 
 
 @app.route('/test/')
@@ -118,16 +132,15 @@ def load_blueprints():
     for blueprint in blueprints.values():
         
         blueprint_name = getattr(blueprint, '__name__')
-        #print getattr(getattr(blueprints[fname], blueprint_name), '__doc__')
-        if hasattr(blueprint, 'LABEL'):
-            blueprint_label = getattr(blueprints, 'LABEL')
-        else:
-            blueprint_label = blueprint_name
-            
+        blueprint = getattr(blueprint, blueprint_name, blueprint)
+        
+        blueprint_label = getattr(blueprint, 'LABEL', blueprint_name)
         blueprint_icon = getattr(blueprint, 'ICON', 'link')
             
         # if hasattr(blueprints[fname], 'PUBLIC_ENDPOINTS'):
             # app.config['PUBLIC_ENDPOINTS'] = app.config['PUBLIC_ENDPOINTS'] + getattr(blueprints[fname], 'PUBLIC_ENDPOINTS')
                 
         app.register_blueprint(getattr(blueprint, 'module'), url_prefix='/%s' % blueprint_name)
-        app.jinja_env.globals['blueprints'].append( ("%s.index"%blueprint_name, blueprint_label, blueprint_icon) )    
+        app.jinja_env.globals['blueprints'].append( ("%s.index"%blueprint_name, blueprint_label, blueprint_icon) )
+        
+    app.config['registered_blueprints'] = blueprints

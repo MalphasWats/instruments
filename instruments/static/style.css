@@ -175,12 +175,16 @@ nav li.selected a
 {
     background-color:#15A5F7;
     color:white;
+    
+    text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
 nav a:hover
 {
     background-color:#5FBFFA;
     color:white;
+    
+    text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
 }
  
 nav a i
@@ -314,7 +318,9 @@ label.button
 {
 	min-width:0px;
 	border:1px solid #fff;
-	border-color:#8466AF #391D5F #381D5E #8466AF;
+	border-color:#9ED9FC #045788 #045788 #9ED9FC;
+    
+    border-radius:3px;
 }
 label.button input:hover {cursor:pointer;}
 
@@ -322,17 +328,69 @@ label.button input
 {
 	margin:0px;
 	width:auto;
-	background:#572D92;
-	background-image: linear-gradient(bottom, rgb(78, 40, 131) 1%, rgb(104, 66, 157) 51%);
-	background-image: -webkit-linear-gradient(bottom, rgb(78, 40, 131) 1%, rgb(104, 66, 157) 51%);
-	background-image: -moz-linear-gradient(bottom, rgb(78, 40, 131) 1%, rgb(104, 66, 157) 51%);
-	background-image: -ms-linear-gradient(bottom, rgb(78, 40, 131) 1%, rgb(104, 66, 157) 51%);
+	background:#15A5F7;
+	background-image: linear-gradient(bottom, rgb(21, 165, 247) 1%, rgb(85, 188, 250) 51%);
+	background-image: -webkit-linear-gradient(bottom, rgb(21, 165, 247) 1%, rgb(85, 188, 250) 51%); /*rgb(21, 165, 247)*/
+	background-image: -moz-linear-gradient(bottom, rgb(21, 165, 247) 1%, rgb(85, 188, 250) 51%);
+	background-image: -ms-linear-gradient(bottom, rgb(21, 165, 247) 1%, rgb(85, 188, 250) 51%);
 	color:white;
 	border:none;
-	border-top:1px solid #AB96C9;
+	border-top:1px solid #CFEDFE;
+    
+    text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
 label.button input:disabled
 {
     color:#bbb;
+}
+
+
+/* Accordion */
+
+dl.accordion
+{
+    margin-right:12px;
+}
+
+dl.accordion ul
+{
+    list-style-type:none;
+}
+
+dl.accordion dt
+{
+    background-color:#15A5F7;
+    color:white;
+    padding:6px;
+}
+
+dl.accordion dt a
+{
+    display:block;
+    text-decoration:none;
+    color:white;
+}
+
+dl.accordion dd
+{
+    padding:6px;
+    height:0px;
+    
+    overflow:hidden;
+    
+    border-bottom:1px solid #dfdfdf;
+    border-left:1px solid #dfdfdf;
+    border-right:1px solid #dfdfdf;
+}
+
+dl.accordion dd>*:first-child
+{
+    margin-top:6px;
+}
+
+dl.accordion dd:target
+{
+    height:100%;
+    
 }

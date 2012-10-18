@@ -45,6 +45,7 @@ def create_tables():
     
     
 def check_login_details(username, password_plaintext):
+    return {'forename': 'Mike', 'surname': 'Watts', 'user_id': 0}
     password_hash = hashlib.sha512(password_plaintext).hexdigest()
     query = """
         SELECT user_id, forename, surname

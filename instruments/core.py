@@ -10,7 +10,6 @@ import database
 #from functools import wraps
 
 SECRET_KEY = 'banana'
-#PUBLIC_ENDPOINTS = ['login', 'static', 'test_route']
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -111,14 +110,8 @@ def update_password():
 @app.route('/test/')
 @public_endpoint
 def test_route():
-    #app.config['PUBLIC_ENDPOINTS'].append('admin')
     print "test reached"
     return render_template('admin.html')
-    #return redirect(url_for('home'))
-    
-    
-def is_public_endpoint(endpoint):
-    return endpoint in app.config['PUBLIC_ENDPOINTS']
     
     
 def load_blueprints():
@@ -153,9 +146,6 @@ def load_blueprints():
         
         blueprint_label = getattr(blueprint, 'LABEL', None)
         blueprint_icon = getattr(blueprint, 'ICON', 'link')
-            
-        # if hasattr(blueprints[fname], 'PUBLIC_ENDPOINTS'):
-            # app.config['PUBLIC_ENDPOINTS'] = app.config['PUBLIC_ENDPOINTS'] + getattr(blueprints[fname], 'PUBLIC_ENDPOINTS')
                 
         app.register_blueprint(getattr(blueprint, 'module'), url_prefix='/%s' % blueprint_name)
         if blueprint_label:

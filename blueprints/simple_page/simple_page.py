@@ -11,7 +11,6 @@ module = Blueprint('simple_page', __name__,
 LABEL = 'Simple Page'
 ADMIN_LABEL = 'Simple Page Administration'
 ICON = 'globe'
-#PUBLIC_ENDPOINTS = ['index']
 
 
 @module.route('/page/')

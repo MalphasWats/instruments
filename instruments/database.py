@@ -106,3 +106,25 @@ def update_password(user_id, password_plaintext):
     conn.commit()
     curs.close()
     conn.close()
+    
+    
+def execute_query(query, values=[]):
+    conn, curs = connect()
+    
+    curs.execute(query, values)
+    
+    results = []
+    try:
+        conn.commit()
+        results = curs.fetchall()
+        
+    except:
+        pass
+    
+    if len(results) == 1 and len(results[0]) == 1:
+        results = results[0][0]
+    
+    curs.close()
+    conn.close()
+    
+    return results

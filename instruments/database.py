@@ -1,7 +1,7 @@
 import psycopg2, psycopg2.extras
 import hashlib
 
-DSN = 'dbname=instruments user=instruments password=marblecat4263'
+DSN = ''
 
 
 def connect():

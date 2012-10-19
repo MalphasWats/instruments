@@ -111,7 +111,6 @@ def update_password():
 @public_endpoint
 def test_route():
     print "test reached"
-    return render_template('admin.html')
     
     
 def load_blueprints():
@@ -152,3 +151,14 @@ def load_blueprints():
             app.jinja_env.globals['blueprints'].append( ("%s.index"%blueprint_name, blueprint_label, blueprint_icon) )
         
     app.config['registered_blueprints'] = blueprints
+    
+    
+    
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error_page.html', error_code=404, error_message="The page you requested could not be found."), 404
+    
+    
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('error_page.html', error_code=500, error_message="Internal Server Error."), 500

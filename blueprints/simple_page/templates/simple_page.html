@@ -1,29 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+{% extends "layout.html" %}
+{% block html_head %}{% endblock %}
 
+{% block html_title %}Simple Page{% endblock %}
 
-<title>Simple Page</title>
+{% block title %}Simple Page{% endblock %}
+    
+{% block content %}
+<p>Simple Page</p>
+{% endblock %}
 
-</head>
-
-<body>
-
-<header>
-<h1>My Page</h1>
-<nav>
-	<ul>
-		<li><a href="/">[home]</a></li>
-	</ul>
-</nav>
-</header>
-
-<section id="page_content">
-
-<p>My Simple Page</p>
-
-</section>
-
-</body>
-</html>
+{% block sidebar %}{% endblock %}

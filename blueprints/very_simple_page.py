@@ -1,6 +1,6 @@
 """A very simple page"""
 
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 LABEL = "Very Simple Page"
 
@@ -10,13 +10,5 @@ blueprint = Blueprint('very_simple_page', __name__,
 
 @blueprint.route('/very_simple_page')
 def index():
-    return """<html>
-    <head>
-    <title>Very Simple Page</title>
-    </head>
-    <body>
-    <h1>Very Simple Page</h1>
-    <p>This is a very simple Page</p>
-    </body>
-    </html>"""
+    return render_template('page.html', page_title="Very Simple Page", page_content="<p>Very Simple Page</p>")
     

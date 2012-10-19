@@ -37,8 +37,8 @@ def check_valid_login():
     
 
 @app.route('/')
-def home():
-    return render_template('layout.html')
+def index():
+    return render_template('dashboard.html')
     
     
 @app.route('/login/', methods=['POST', 'GET'])

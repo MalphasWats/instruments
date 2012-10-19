@@ -16,13 +16,13 @@
 <header>
     {% if session.user %}<span><i class="icon-user"></i> {{session.user['forename']}} {{session.user['surname']}} <a href="{{url_for('logout')}}"><i class="icon-signout" title="log out"></i></a></span>{% endif %}
     
-    <h1>Instruments <span>{% block title %}Dashboard{% endblock %}</span></h1>
+    <h1>Instruments <span>{% block title %}Home{% endblock %}</span></h1>
     
 </header>
 
-<nav>
+<nav id="main">
     <ul>
-        <li {% if request.endpoint == 'home' %}class="selected"{% endif %}><a href="{{url_for('home')}}"><span></span><i class="icon-home"></i>Home</a></li>
+        <li {% if request.endpoint == 'index' %}class="selected"{% endif %}><a href="{{url_for('index')}}"><span></span><i class="icon-home"></i>Home</a></li>
         {% block main_navigation %}
         {% for endpoint, label, icon in blueprints %}
             <li {% if endpoint == request.endpoint %}class="selected"{% endif %}><a href="{{url_for(endpoint)}}"><span></span><i class="icon-{{icon}}"></i>{{label}}</a></li>
@@ -34,9 +34,7 @@
 
 <section id="content">
 
-{% block content %}
-<p>Welcome to the Instruments Dashboard</p>
-{% endblock %}
+{% block content %}{% endblock %}
 
 </section>
 
@@ -44,12 +42,7 @@
     {% for message in get_flashed_messages(True) %}
     <div class="flashmessage {{message[0]}}">{{ message[1] }}</div>
     {% endfor %}
-    {% block sidebar %}
-    <section>
-        <h2>Sidebar Item</h2>
-        <p>sidebar item content</p>
-    </section>
-    {% endblock %}
+    {% block sidebar %}{% endblock %}
 </section>
 
 </body>

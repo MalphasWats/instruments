@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block html_head %}{% endblock %}
+
+{% block html_title %}Dashboard{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+    
+{% block content %}
+<p>Welcome to the Instruments Dashboard</p>
+<nav>
+    <ul>
+    {% for widget in content_widgets %}
+    <li>{{widget | safe}}</li>
+    {% endfor %}
+    </ul>
+</nav>
+{% endblock %}
+
+{% block sidebar %}
+    <section>
+        <h2>Sidebar Item</h2>
+        <p>sidebar item content</p>
+    </section>
+{% endblock %}

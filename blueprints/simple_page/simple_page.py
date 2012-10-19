@@ -28,4 +28,4 @@ def test():
         
         
 def get_admin_panel():
-    return render_template('admin/admin_panel.html')
+    return render_template('widgets/admin_panel.html')

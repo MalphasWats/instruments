@@ -145,7 +145,7 @@ header>span a
 }
 
 /* Nav */
-nav
+nav#main
 {
     float:left;
     width:90px;
@@ -159,7 +159,7 @@ nav ul
     list-style-type:none;
 }
 
-nav a
+nav#main a
 {
     text-decoration:none;
     color:#767676;
@@ -171,7 +171,7 @@ nav a
     width:90px;
 }
 
-nav li.selected a
+nav#main li.selected a
 {
     background-color:#15A5F7;
     color:white;
@@ -179,7 +179,7 @@ nav li.selected a
     text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
-nav a:hover
+nav#main a:hover
 {
     background-color:#5FBFFA;
     color:white;
@@ -187,18 +187,18 @@ nav a:hover
     text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
 }
  
-nav a i
+nav#main a i
 {
     display:block;
     font-size:24pt;
 }
 
-nav li.selected
+nav#main li.selected
 {
     position:relative;
 }
 
-nav li span
+nav#main li span
 {
     display:none;
 	height:0px;
@@ -208,7 +208,7 @@ nav li span
 	
 }
 
-nav li.selected span
+nav#main li.selected span
 {
     display:block;
     border-top: 20px solid transparent;

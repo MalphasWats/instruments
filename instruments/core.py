@@ -147,7 +147,7 @@ def load_blueprints():
         blueprint_label = getattr(blueprint, 'LABEL', None)
         blueprint_icon = getattr(blueprint, 'ICON', 'link')
                 
-        app.register_blueprint(getattr(blueprint, 'module'), url_prefix='/%s' % blueprint_name)
+        app.register_blueprint(getattr(blueprint, 'blueprint'), url_prefix='/%s' % blueprint_name)
         if blueprint_label:
             app.jinja_env.globals['blueprints'].append( ("%s.index"%blueprint_name, blueprint_label, blueprint_icon) )
         

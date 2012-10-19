@@ -4,11 +4,11 @@ from flask import Blueprint
 
 LABEL = "Very Simple Page"
 
-module = Blueprint('very_simple_page', __name__,
+blueprint = Blueprint('very_simple_page', __name__,
                         template_folder='templates')
 
 
-@module.route('/very_simple_page')
+@blueprint.route('/very_simple_page')
 def index():
     return """<html>
     <head>

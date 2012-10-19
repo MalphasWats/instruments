@@ -1,1 +1,1 @@
-from simple_page import module
+from simple_page import blueprint

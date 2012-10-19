@@ -62,7 +62,7 @@ def login():
                 session['user'] = dict(user)
                 next = request.form.get('next')
                 if next == '' or next == 'login':
-                    next = 'home'
+                    next = 'index'
                 return redirect(url_for(next))
             else:
                 flash("incorrect username/password.", category='error')
@@ -75,7 +75,7 @@ def login():
 def logout():
     session.pop('user', None)
     print session
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
     
     
 @app.route('/admin/')

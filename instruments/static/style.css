@@ -393,3 +393,32 @@ dl.accordion dd:target
     height:100%;
     
 }
+
+/* Widgets */
+nav.widgets
+{
+    overflow:auto;
+}
+
+nav.widgets li
+{
+    float:left;
+    display:block;
+    
+    border:1px solid #d7d7d7;
+    border-radius:4px;
+    
+    background-color:white;
+    margin:0px 12px 12px 0px;
+}
+
+nav.widgets li a
+{
+    display:table-cell;
+    width:200px; height:80px;
+    padding:10px; /*10px;*/
+    
+    text-align:center;
+    vertical-align:middle;
+    text-decoration:none;
+}

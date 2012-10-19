@@ -7,13 +7,15 @@
     
 {% block content %}
 <p>Welcome to the Instruments Dashboard</p>
-<nav>
+{% if content_widgets %}
+<nav class="widgets">
     <ul>
     {% for widget in content_widgets %}
-    <li>{{widget | safe}}</li>
+    <li><a href="{{url_for(widget.endpoint)}}">{{widget.content | safe}}</a></li>
     {% endfor %}
     </ul>
 </nav>
+{% endif %}
 {% endblock %}
 
 {% block sidebar %}

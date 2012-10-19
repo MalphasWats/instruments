@@ -12,3 +12,9 @@ blueprint = Blueprint('very_simple_page', __name__,
 def index():
     return render_template('page.html', page_title="Very Simple Page", page_content="<p>Very Simple Page</p>")
     
+    
+def get_content_widget():
+    return """
+    <table style="margin:0 auto"><tr><td>0</td><td>123</td><td>77</td></tr></table>
+    <p>A very simple page</p>"""
+    

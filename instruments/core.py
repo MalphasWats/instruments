@@ -38,7 +38,18 @@ def check_valid_login():
 
 @app.route('/')
 def index():
-    return render_template('dashboard.html')
+    #widgets = ['test widget', 'test widget 2']
+    content_widgets = []
+    for blueprint in app.config['registered_blueprints'].values():
+        blueprint_name = getattr(blueprint, '__name__')
+        blueprint = getattr(blueprint, blueprint_name, blueprint)
+        
+        if hasattr(blueprint, 'get_content_widget'):
+            content_widgets.append( {
+                'endpoint': "%s.index"%blueprint_name, 
+                'content': blueprint.get_content_widget()
+            } )
+    return render_template('dashboard.html', content_widgets=content_widgets)
     
     
 @app.route('/login/', methods=['POST', 'GET'])

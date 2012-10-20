@@ -1,11 +1,11 @@
 import psycopg2, psycopg2.extras
 import hashlib
 
-DSN = ''
+from instruments import app
 
 
 def connect():
-    conn = psycopg2.connect(DSN)
+    conn = psycopg2.connect(app.config['DSN'])
     curs = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
     return conn, curs
@@ -119,6 +119,7 @@ def execute_query(query, values=[]):
         results = curs.fetchall()
         
     except:
+        #log an error
         pass
     
     if len(results) == 1 and len(results[0]) == 1:

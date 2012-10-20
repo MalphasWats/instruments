@@ -1,14 +1,10 @@
-from flask import (Flask, request, session, g, redirect, url_for,
-                   abort, render_template, flash, jsonify)
+from flask import request, session, redirect, url_for, abort, render_template, flash
 
 import hashlib
 
 import database
 
-SECRET_KEY = 'banana'
-
-app = Flask(__name__)
-app.config.from_object(__name__)
+from instruments import app
 
 
 def public_endpoint(function):

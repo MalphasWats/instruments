@@ -1,0 +1,2 @@
+SECRET_KEY = 'SECRET KEY'
+DSN = 'dbname=database_name user=username password=password'

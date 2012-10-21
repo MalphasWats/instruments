@@ -1,0 +1,6 @@
+import sys
+
+sys.path.append('/path/to/instruments')
+
+from instruments import app as application
+application.config.from_pyfile('/path/to/settings.cfg')

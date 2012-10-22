@@ -138,6 +138,8 @@ def load_blueprints():
     app.jinja_env.globals['blueprints'] = []
     
     path = 'blueprints'
+    if not os.path.isdir(path):
+        return
     dir_list = os.listdir(path)
     blueprints = {}
     

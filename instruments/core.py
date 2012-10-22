@@ -1,6 +1,8 @@
 from flask import request, session, redirect, url_for, abort, render_template, flash
 
 import hashlib
+import os
+import imp
 
 import database
 
@@ -124,3 +126,45 @@ def page_not_found(e):
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template('error_page.html', error_code=500, error_message="Internal Server Error."), 500
+    
+    
+    
+def load_blueprints():
+    """
+    Looks for blueprints, loads them and generates
+    a blueprints global for jinja
+    """
+    
+    app.jinja_env.globals['blueprints'] = []
+    
+    path = 'blueprints'
+    dir_list = os.listdir(path)
+    blueprints = {}
+    
+    for fname in dir_list:
+        if os.path.isdir(os.path.join(path, fname)) and os.path.exists(os.path.join(path, fname, '__init__.py')):
+            f, filename, descr = imp.find_module(fname, [path])
+            blueprints[fname] = imp.load_module(fname, f, filename, descr)
+            
+        elif os.path.isfile(os.path.join(path, fname)):
+            name, ext = os.path.splitext(fname)
+            if ext == '.py' and not name == '__init__':
+                f, filename, descr = imp.find_module(name, [path])
+                blueprints[fname] = imp.load_module(name, f, filename, descr)
+    
+    for blueprint in blueprints.values():
+        
+        blueprint_name = getattr(blueprint, '__name__')
+        blueprint = getattr(blueprint, blueprint_name, blueprint)
+        
+        blueprint_label = getattr(blueprint, 'LABEL', None)
+        blueprint_icon = getattr(blueprint, 'ICON', 'link')
+                
+        app.register_blueprint(getattr(blueprint, 'blueprint'), url_prefix='/%s' % blueprint_name)
+        if hasattr(blueprint, 'configure_blueprint'):
+            configure_blueprint = getattr(blueprint, 'configure_blueprint')
+            configure_blueprint(app.config[blueprint_name.upper()])
+        if blueprint_label:
+            app.jinja_env.globals['blueprints'].append( ("%s.index"%blueprint_name, blueprint_label, blueprint_icon) )
+        
+    app.config['registered_blueprints'] = blueprints

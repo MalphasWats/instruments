@@ -1,4 +1,4 @@
 .DS_Store
 *.py[co]
 
-settings.cfg
+settings.py

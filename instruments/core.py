@@ -36,7 +36,6 @@ def index():
     content_widgets = []
     for blueprint in app.config['registered_blueprints'].values():
         blueprint_name = getattr(blueprint, '__name__')
-        blueprint = getattr(blueprint, blueprint_name, blueprint)
         
         if hasattr(blueprint, 'get_content_widget'):
             content_widgets.append( {
@@ -81,7 +80,6 @@ def admin():
     blueprints = []
     for blueprint in app.config['registered_blueprints'].values():
         blueprint_name = getattr(blueprint, '__name__')
-        blueprint = getattr(blueprint, blueprint_name, blueprint)
         
         if hasattr(blueprint, 'get_admin_panel'):
             blueprints.append( {
@@ -157,7 +155,6 @@ def load_blueprints():
     for blueprint in blueprints.values():
         
         blueprint_name = getattr(blueprint, '__name__')
-        blueprint = getattr(blueprint, blueprint_name, blueprint)
         
         blueprint_label = getattr(blueprint, 'LABEL', None)
         blueprint_icon = getattr(blueprint, 'ICON', 'link')

@@ -126,7 +126,7 @@ def page_not_found(e):
     return render_template('error_page.html', error_code=500, error_message="Internal Server Error."), 500
     
     
-    
+#@app.before_first_request
 def load_blueprints():
     """
     Looks for blueprints, loads them and generates

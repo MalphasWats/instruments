@@ -415,10 +415,15 @@ nav.widgets li
 nav.widgets li a
 {
     display:table-cell;
-    width:200px; height:80px;
-    padding:10px; /*10px;*/
+    width:220px; height:100px;
+    padding:0px; /*10px;*/
     
     text-align:center;
     vertical-align:middle;
     text-decoration:none;
+}
+
+nav.widgets table th, nav.widgets table td
+{
+    padding:2px;
 }

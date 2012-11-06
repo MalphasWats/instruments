@@ -11,7 +11,7 @@ def connect():
     return conn, curs
     
     
-def create_tables():
+def create_tables(DSN, forename, surname, email, username, password):
     query = """
         CREATE TABLE users (
             user_id SERIAL PRIMARY KEY,
@@ -25,23 +25,39 @@ def create_tables():
             CREATE INDEX email ON users(email);
     """
     
-    conn, curs = connect()
+    try:
+        conn = psycopg2.connect(DSN)
+    except:
+        print "Error connecting to database: %s" % DSN
+        return
+        
+    curs = conn.cursor()
     
-    curs.execute(query)
+    try:
+        curs.execute(query)
+    except:
+        print "Error executing query on database"
+        curs.close()
+        conn.close()
+        raise
+        return
     
     # Create default account
-    password = "password"
     password_hash = hashlib.sha512(password).hexdigest()
     query = """INSERT INTO users (forename, surname, email, username, password)
-               VALUES ('Default', 'User', NULL, 'default.user', %s);"""
-               
-    curs.execute(query, (password_hash,))
+               VALUES (%s, %s, %s, %s, %s);"""
     
-    
-    
-    conn.commit()
-    curs.close()
-    conn.close()
+    try:           
+        curs.execute(query, (forename, surname, email, username, password_hash))
+        conn.commit()
+    except:
+        print "Error executing query on database: %s" % DSN
+        raise
+    else:
+        print "Tables successfully created."
+    finally:
+        curs.close()
+        conn.close()
     
     
 def check_login_details(username, password_plaintext):

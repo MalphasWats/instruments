@@ -229,16 +229,16 @@ section#content
     float:left;
     
     min-height:540px;
-    width:55%;
+    width:60%;
     
     border:1px solid #d7d7d7;
     border-top:1px solid #f7f7f7;
     border-bottom-right-radius:8px;
     border-bottom-left-radius:8px;
     
-    margin-right:28px;
+    margin-right:12px;
     
-    padding:20px 0px 0px 28px;
+    padding:20px 6px 0px 22px;
 }
 
 section>*
@@ -261,7 +261,7 @@ section#sidebar section
     
     background-color:white;
     
-    margin-top:28px;
+    margin-top:12px;
     
     padding:14px;
 }

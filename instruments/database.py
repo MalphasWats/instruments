@@ -3,9 +3,13 @@ import hashlib
 
 from instruments import app
 
+psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 
 def connect():
+    
     conn = psycopg2.connect(app.config['DSN'])
+    conn.set_client_encoding('UTF8')
+    
     curs = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
     return conn, curs

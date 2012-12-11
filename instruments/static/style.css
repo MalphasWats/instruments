@@ -148,7 +148,7 @@ header>span a
 nav#main
 {
     float:left;
-    width:8%;
+    width:8%; max-width:90px;
     border-top:1px solid #efefef;
     
     text-align:center;

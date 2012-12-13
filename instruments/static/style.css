@@ -421,6 +421,11 @@ nav.widgets li a
     text-decoration:none;
 }
 
+nav.widgets a table
+{
+    color:black;
+}
+
 nav.widgets table th, nav.widgets table td
 {
     padding:2px;

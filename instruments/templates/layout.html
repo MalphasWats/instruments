@@ -34,14 +34,15 @@
 
 <section id="content">
 
+{% for message in get_flashed_messages(True) %}
+    <div class="flashmessage {{message[0]}}">{{ message[1] }}</div>
+{% endfor %}
+
 {% block content %}{% endblock %}
 
 </section>
 
 <section id="sidebar">
-    {% for message in get_flashed_messages(True) %}
-    <div class="flashmessage {{message[0]}}">{{ message[1] }}</div>
-    {% endfor %}
     {% block sidebar %}{% endblock %}
 </section>
 
